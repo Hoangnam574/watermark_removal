@@ -1,62 +1,134 @@
-Chimzuruoke Okafor
+# Watermark Removal
 
-# Watermark-Removal
+Dự án ứng dụng Deep Learning (Image Inpainting) để tự động phát hiện và xóa watermark trên hình ảnh, tái tạo lại vùng ảnh bị che khuất một cách tự nhiên và liền mạch. Dự án cung cấp cả giao diện Web trực quan (Flask) lẫn công cụ dòng lệnh (CLI), cùng pipeline huấn luyện mô hình.
 
-<p>
-  <a href="https://pepy.tech/project/prompttools" target="_blank"><img src="https://static.pepy.tech/badge/prompttools" alt="Total Downloads"/></a>
-  <a href="https://github.com/hegelai/watermark-removal"><img src="https://img.shields.io/github/stars/zuruoke/watermark-removal" /></a>
-  <a href="https://twitter.com/zuruoke_okafor"><img src="https://img.shields.io/twitter/follow/Zuruoke_Okafor?style=social"></a>
-</p>
+---
 
-![version](https://img.shields.io/badge/version-v1.0.0-green.svg?style=plastic)
-![pytorch](https://img.shields.io/badge/tensorflow-v1.15.0-green.svg?style=plastic)
-![license](https://img.shields.io/badge/license-CC_BY--NC-green.svg?style=plastic)
+## 🌟 Tính Năng Chính
 
-<a href="https://coff.ee/zuruokeokafor" target="_blank">
-  <img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png"
-       alt="Buy Me A Coffee"
-       style="height: 41px;width:174px;box-shadow:0px 3px 2px rgba(190,190,190,0.5);" />
-</a>
+- **Giao diện Web trực quan (Flask)**:
+  - Hỗ trợ kéo & thả hoặc chọn nhiều ảnh cùng lúc.
+  - Xem trước và so sánh trực tiếp kết quả trước / sau khi xóa watermark (side-by-side comparison).
+  - Tải về ảnh đã xử lý nhanh chóng.
+- **Công cụ dòng lệnh (CLI)**:
+  - Xử lý từng ảnh đơn lẻ với độ chính xác cao (`main.py`).
+  - Hỗ trợ kiểm thử hàng loạt (`batch_test.py` và `guided_batch_test.py`).
+- **Huấn luyện mô hình (Training)**:
+  - Kịch bản huấn luyện mô hình Image Inpainting với Generative Inpainting (`train.py`).
+- **Kiến trúc mô hình**:
+  - Dựa trên cơ chế **Contextual Attention** (CVPR 2018) và **Gated Convolution** (ICCV 2019) giúp tái tạo chi tiết và kết cấu hình ảnh chân thực.
 
-An open source project that uses a machine learning based image inpainting methodology to remove watermark from images which is totally indistinguishable from the ground truth version of the image.
+---
 
-This project was inspired by the [Contextual Attention](https://arxiv.org/abs/1801.07892) (CVPR 2018) and [Gated Convolution](https://arxiv.org/abs/1806.03589) (ICCV 2019 Oral).
+## 📁 Cấu Trúc Thư Mục
 
-And also a shoutout to [Chu-Tak Li](https://chutakcode.wixsite.com/website) for his [Medium article series](https://towardsdatascience.com/10-papers-you-must-read-for-deep-image-inpainting-2e41c589ced0) that really gave me a deep insight into the image inpainting papers stated above
-
-<img src="https://user-images.githubusercontent.com/51057490/140277713-c7d6e2b9-db62-4793-823a-25ed0c4e2771.png" width="45%"/> <img src="https://user-images.githubusercontent.com/51057490/140277781-5b5218bb-9044-4ec9-a349-eea93bc56d4a.png" width="45%"/> <img src="https://user-images.githubusercontent.com/51057490/140277929-3f187647-0e63-4bcb-b9f1-472f7558aae5.jpeg" width="45%"/> <img src="https://user-images.githubusercontent.com/51057490/140277957-6ddb7dec-25c8-42f1-8e39-be491d4f2248.png" width="45%"/> <img src="https://user-images.githubusercontent.com/51057490/140277983-265a1c9e-6093-4154-8252-838baca21c41.jpeg" width="45%" /> <img src="https://user-images.githubusercontent.com/51057490/140278002-56c4ae3d-6bfb-4ba3-aa02-7bd28474bfdf.png" width="45%" /> <img src="https://user-images.githubusercontent.com/51057490/140278030-d2a962ce-3722-43f1-b1bd-0ffde2aa7026.jpeg" width="45%" /> <img src="https://user-images.githubusercontent.com/51057490/140278040-10e401d7-4b7d-4d81-91fe-e9f01ef4ce7f.png" width="45%" /> <img src="https://user-images.githubusercontent.com/51057490/140278017-34862de0-86eb-40f0-b04b-7dc02fe38a77.jpeg" width="45%" /> <img src="https://user-images.githubusercontent.com/51057490/140278011-e0ae9ed0-e4ed-44ed-a9ac-28eb8456797a.png" width="45%" />
-
-## Run
-
-- use [Google colab](https://research.google.com/colaboratory/)
-
-- First of all, clone this repo
-
-      !git clone https://github.com/zuruoke/watermark-removal
-
-- Change Directory to the repo
-
-      !cd watermark-removal
-
-- Since Google Colab uses the latest Tensorflow 2x version and this project uses 1.15.0, downgrade to Tensorflow 1.15.0 version and restart the runtime, (`although the new version of Google Colab does not need you to restart the runtime`).
-
-      !pip install tensorflow==1.15.0
-
-- Install tensorflow toolkit [neuralgym](https://github.com/JiahuiYu/neuralgym).
-
-      !pip install git+https://github.com/JiahuiYu/neuralgym
-
-- Download the model dirs using this [link](https://drive.google.com/drive/folders/1xRV4EdjJuAfsX9pQme6XeoFznKXG0ptJ?usp=sharing) and put it under `model/` (rename `checkpoint.txt` to `checkpoint` because sometimes google drive automatically adds .txt after download)
-
-And you're all Set!!
-
-- Now remove the watermark on the image by runing the `main.py` file
-
-      !python main.py --image path-to-input-image --output path-to-output-image --checkpoint_dir model/ --watermark_type istock
-
-## Citing
-
+```text
+watermark-removal/
+├── app.py                  # Ứng dụng Web Flask
+├── main.py                 # CLI xử lý xóa watermark cho 1 ảnh
+├── batch_test.py           # Kịch bản kiểm thử hàng loạt ảnh
+├── guided_batch_test.py    # Kịch bản kiểm thử batch có hướng dẫn
+├── train.py                # Pipeline huấn luyện mô hình
+├── inpaint_model.py        # Định nghĩa kiến trúc mô hình Inpaint Contextual Attention
+├── inpaint_ops.py          # Các phép toán tùy chỉnh TensorFlow cho inpainting
+├── preprocess_image.py     # Tiền xử lý hình ảnh và tạo mặt nạ (mask)
+├── inpaint.yml             # File cấu hình mô hình và huấn luyện
+├── requirements.txt        # Danh sách thư viện phụ thuộc
+├── templates/
+│   └── index.html          # Giao diện người dùng Web
+├── static/                 # Tài nguyên web (uploads, outputs)
+├── utils/                  # Mặt nạ mẫu (watermark masks)
+└── model/                  # Thư mục chứa trọng số mô hình đã huấn luyện (checkpoint)
 ```
+
+---
+
+## 🛠️ Cài Đặt
+
+### 1. Yêu cầu hệ thống
+- **Python**: khuyến nghị **Python 3.7** (để tương thích tốt nhất với TensorFlow 1.15).
+- Khuyến nghị sử dụng môi trường ảo (`venv` hoặc `conda`).
+
+### 2. Clone mã nguồn
+```bash
+git clone https://github.com/Hoangnam574/watermark_removal.git
+cd watermark_removal
+```
+
+### 3. Cài đặt các thư viện cần thiết
+```bash
+pip install -r requirements.txt
+```
+
+> **Lưu ý**: Nếu cần cài đặt thủ công `neuralgym`:
+> ```bash
+> pip install git+https://github.com/JiahuiYu/neuralgym
+> ```
+
+### 4. Tải trọng số mô hình (Model Checkpoints)
+Tải mô hình đã được huấn luyện sẵn từ liên kết sau:
+👉 [Google Drive Download Checkpoints](https://drive.google.com/drive/folders/1xRV4EdjJuAfsX9pQme6XeoFznKXG0ptJ?usp=sharing)
+
+Sau khi tải về, đặt các file vào thư mục `model/`:
+- `model/checkpoint` *(Lưu ý: Nếu Google Drive đổi tên thành checkpoint.txt, hãy đổi lại thành checkpoint)*
+- `model/snap-0.data-00000-of-00001`
+- `model/snap-0.index`
+- `model/snap-0.meta`
+
+---
+
+## 🚀 Hướng Dẫn Sử Dụng
+
+### 1. Khởi chạy Giao diện Web (Flask)
+```bash
+python app.py
+```
+Mở trình duyệt web và truy cập địa chỉ:
+```
+http://127.0.0.1:5000
+```
+Tại giao diện web:
+- Kéo thả hoặc bấm chọn ảnh cần xóa watermark.
+- Nhấn **Xóa Watermark**.
+- Xem kết quả so sánh và nhấn **Tải ảnh đã xử lý**.
+
+---
+
+### 2. Sử dụng dòng lệnh (CLI)
+
+#### Xử lý một ảnh đơn:
+```bash
+python main.py --image input/sample.jpg --output output/result.png --checkpoint_dir model/ --watermark_type istock
+```
+
+Các tham số chính:
+- `--image`: Đường dẫn đến ảnh đầu vào chứa watermark.
+- `--output`: Đường dẫn lưu ảnh kết quả sau khi xóa watermark.
+- `--checkpoint_dir`: Thư mục chứa trọng số mô hình (mặc định: `model/`).
+- `--watermark_type`: Kiểu watermark cần xóa (ví dụ: `istock`).
+
+#### Chạy kiểm thử hàng loạt (Batch Test):
+```bash
+python batch_test.py --flist flist.txt --image_height 512 --image_width 512 --checkpoint_dir model/
+```
+
+---
+
+### 3. Huấn luyện mô hình (Training)
+Để huấn luyện mô hình với tập dữ liệu mới:
+1. Cấu hình danh sách dữ liệu trong file `inpaint.yml`.
+2. Chạy kịch bản:
+```bash
+python train.py
+```
+
+---
+
+## 📚 Tham Khảo (Citations)
+
+Mô hình inpainting được phát triển dựa trên các nghiên cứu:
+
+```bibtex
 @article{yu2018generative,
   title={Generative Image Inpainting with Contextual Attention},
   author={Yu, Jiahui and Lin, Zhe and Yang, Jimei and Shen, Xiaohui and Lu, Xin and Huang, Thomas S},
@@ -72,14 +144,7 @@ And you're all Set!!
 }
 ```
 
-<p align="center">
-<a href="https://star-history.com/#zuruoke/watermark-removal">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=zuruoke/watermark-removal&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=zuruoke/watermark-removal&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=zuruoke/watermark-removal&type=Date" />
-  </picture>
-</a>
-</p>
+---
 
-## © Chimzuruoke Okafor
+## 📄 Bản Quyền & Giấy Phép
+Dự án được phân phối cho mục đích học tập và nghiên cứu (Non-Commercial / Educational Use).

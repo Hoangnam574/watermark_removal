@@ -1,4 +1,41 @@
-model
-logs
-data
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caches & temporary files
+.pytest_cache/
+*.log
+
+# Pretrained model checkpoints and logs
+model/
+logs/
+data/
 load_model.py
+
+# Static upload/output files
+static/uploads/*
+!static/uploads/.gitkeep
+static/outputs/*
+!static/outputs/.gitkeep
+input/*
+!input/.gitkeep
+output/*
+!output/.gitkeep
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# IDE configs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
